@@ -60,7 +60,7 @@ print("Hello "+name+' ! ')
 i=0
 x=l
 l1[0].append('Distance')
-
+#print l1[0]
 
 for i in range(1,len(l1)):
 	pearson=0
@@ -90,12 +90,47 @@ for i in range(1,len(l1)):
 		pearson=0
 	l1[i].append(pearson)
 
-#print (l1)
-
 list2=l1[1:]
 #sort values according to the pearson correlation calculated
 list2.sort(key=lambda x: float(x[2]))
-print (list2)
+
+ratings=[0 for i in range(len(l1[1][1]))]
+for i in range(len(ratings)):
+	s=0
+	r=0
+	for j in range(1,len(l1)):
+		if(l1[j][1][i]!=-1):
+			#r is the rating of that user multiplied by weight=pearson correlation+1
+			#this was chosen to make the weights positive, as it lies in range -1 to 1
+			r+=l1[j][1][i]*(l1[j][2]+1)
+			#s stores the sum of all weights
+			s+=(l1[j][2]+1)
+	
+	ratings[i]=r/s
+	
+	l1[i].append(0)
+
+number=1
+#print (ratings)
 
 
+ratings2=ratings
+#list storing names of all movies
+movies=l1[0][1:]
+#a linear list of indices from 0 to length of the list of movies
+index=[i for i in range(len(x))]
+#this list will contain the tuples rating,movie,index sorted by their calculated ratings 
+answer=sorted(zip(ratings, movies), reverse=True)
+#print (answer)
+print("You should watch these movies : ")
+count=0
+for i in range(len(answer)):
+	if(not(answer[i][1] in mo) or (answer[i][1] in mo and x[mo.index(answer[i][1])]==-1)):
+		print (answer[i][1]),
+		count+=1
+		if(count==3):
+			break
+
+
+		
 
