@@ -56,8 +56,28 @@ with open("user-preference.csv") as fileobject:
 name=input("Please enter your name:")
 print("Hello "+name+' ! ')
 
-#print (l1)
-#print (l)
-#print (mo)
+print (l1[0])
 i=0
 x=l
+l1[0].append('Distance')
+#print (x)
+print (l1[1][1][l1[0].index(mo[1])])
+#calculating euclidean distance
+for i in range(1,len(l1)):
+	distance=0
+	for j in range(len(x)):
+		
+		if((l1[i][1][l1[0].index(mo[j])-1])!=-1 and x[j]!=-1):
+			distance+=(l1[i][1][l1[0].index(mo[j])-1]-x[j])**2
+	distance=sqrt(distance)
+	l1[i].append(distance)
+
+#print (l1)
+
+list2=l1[1:]
+#sorting the list according to the [2]th value, which is the euclidean distance 
+list2.sort(key=lambda x: float(x[2]))
+print (list2)
+
+
+
