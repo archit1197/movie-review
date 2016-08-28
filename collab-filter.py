@@ -56,8 +56,46 @@ with open("user-preference.csv") as fileobject:
 name=input("Please enter your name:")
 print("Hello "+name+' ! ')
 
-#print (l1)
-#print (l)
-#print (mo)
+#print (l1[0])
 i=0
 x=l
+l1[0].append('Distance')
+
+
+for i in range(1,len(l1)):
+	pearson=0
+	list_of_indices=[]
+	mean_x=0
+	mean_y=0
+	for j in range(len(x)):
+		if(l1[i][1][l1[0].index(mo[j])-1]!=-1 and x[j]!=-1):
+			list_of_indices.append(j)
+			mean_y+=l1[i][1][l1[0].index(mo[j])-1]
+			mean_x+=x[j]
+	#calculation of mean of user input ratings and for the user values already input
+	mean_x=mean_x/len(list_of_indices)
+	mean_y=mean_y/len(list_of_indices)
+	numerator=0
+	denominator1=0
+	denominator2=0
+	for j in list_of_indices:
+		#calculation of pearson coefficient
+		numerator+=(x[j]-mean_x)*(l1[i][1][l1[0].index(mo[j])-1]-mean_y)
+		denominator1+=(x[j]-mean_x)*(x[j]-mean_x)
+		denominator2+=(l1[i][1][l1[0].index(mo[j])-1]-mean_y)*(l1[i][1][l1[0].index(mo[j])-1]-mean_y)
+	
+	if(denominator1*denominator2!=0):
+		pearson=numerator/sqrt(denominator1*denominator2)
+	else:
+		pearson=0
+	l1[i].append(pearson)
+
+#print (l1)
+
+list2=l1[1:]
+#sort values according to the pearson correlation calculated
+list2.sort(key=lambda x: float(x[2]))
+print (list2)
+
+
+
